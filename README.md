@@ -19,5 +19,5 @@ usage of `Rmarkdown` templates.
     workshop](https://github.com/vidonne/unhcrpractice/tree/main/workshop/2021-03-unhcrstyle-americas)
     for the Americas - *March 2021*
 -   [unhcrthemes
-    session]((https://github.com/vidonne/unhcrpractice/tree/main/workshop/2022-07-unhcrthemes-stats))
+    session](https://github.com/vidonne/unhcrpractice/tree/main/workshop/2022-07-unhcrthemes-stats)
     for stats team - *July 2022*
