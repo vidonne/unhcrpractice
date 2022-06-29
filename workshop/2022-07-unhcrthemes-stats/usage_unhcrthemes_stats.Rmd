@@ -4,23 +4,29 @@ subtitle: "Usage of unhcthemes package"
 author: "Cedric Vidonne"
 institute: "IPDA/GDS"
 date: "`r format(Sys.Date(),  '%d %B %Y')`"
-output: unhcrdown::html_slides
+output:
+  unhcrdown::html_slides:
+    self_contained: true
 ---
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 ```
 
-# HTML presentation
+# Objectives
 
-**`html_slides`** is a simple online presentation template part of the [`unhcrdown`](https://github.com/vidonne/unhcrdown) package.
+**About today:**
 
-Install the **`unhcrdown`** package from [Github](https://github.com/vidonne/unhcrdown):
+- Basic of the grammar of graphics and [**`ggplot2`**](https://ggplot2.tidyverse.org/index.html)
+- Introduction to the [**`unhcrthemes`**](https://vidonne.github.io/unhcrthemes/) package
+- Best practices to create **UNHCR branded** visuals in R, with examples
+- What else, dynamic report with the [**`unhcrdown`**](https://github.com/vidonne/unhcrdown)
 
-```{r eval=FALSE, tidy=FALSE}
-# install.packages("remotes")
-remotes::install_github("vidonne/unhcrdown")
-```
+**Not today:**
+
+- Data import: [`readr`](https://readr.tidyverse.org/), [`readxl`](https://readxl.tidyverse.org/), etc.
+- Data manipulation: [`dplyr`](https://dplyr.tidyverse.org/), [`tidyr`](https://tidyr.tidyverse.org/), etc.
+- R programming: [R for Data Science](https://r4ds.had.co.nz/), [Advanced R Programming](https://adv-r.hadley.nz/), etc.
 
 --
 
