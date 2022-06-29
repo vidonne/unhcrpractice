@@ -4,9 +4,7 @@ subtitle: "Usage of unhcthemes package"
 author: "Cedric Vidonne"
 institute: "IPDA/GDS"
 date: "`r format(Sys.Date(),  '%d %B %Y')`"
-output:
-  unhcrdown::html_slides:
-    self_contained: true
+output: unhcrdown::html_slides
 ---
 
 ```{r setup, include=FALSE}

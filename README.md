@@ -15,9 +15,16 @@ usage of `Rmarkdown` templates.
 
 ### Sessions:
 
--   [unhcRstyle
+-   **[`unhcRstyle`
     workshop](https://github.com/vidonne/unhcrpractice/tree/main/workshop/2021-03-unhcrstyle-americas)
-    for the Americas - *March 2021*
--   [unhcrthemes
+    for the Americas** - March 2021
+    -   Presentation
+        ([English](https://vidonne.github.io/unhcrpractice/workshop/2021-03-unhcrstyle-americas/presentation/unhcRstyle_workshop_presentation.html#1) -
+        [Spanish](https://vidonne.github.io/unhcrpractice/workshop/2021-03-unhcrstyle-americas/presentation/unhcRstyle_workshop_presentation_es.html#1))
+    -   Exercises
+        ([Plot](https://github.com/vidonne/unhcRstyle_workshop/tree/master/exercise) -
+        [Report](https://github.com/vidonne/unhcRstyle_workshop/tree/master/report))
+-   **[`unhcrthemes`
     session](https://github.com/vidonne/unhcrpractice/tree/main/workshop/2022-07-unhcrthemes-stats)
-    for stats team - *July 2022*
+    for stats team** - July 2022
+    -   Presentation
