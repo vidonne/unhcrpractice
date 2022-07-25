@@ -296,7 +296,7 @@ How a **`ggplot2`** graph is built on the grammar of graphics elements:
 
 ```{r, echo=FALSE}
 ggplot <- read_csv("data/ggplot.csv")
-kableExtra::kbl(head(ggplot, 8), format = 'html') |> 
+kableExtra::kbl(head(ggplot, 8), format = 'html', caption = "Credit: Cedric Scherer") |> 
   kableExtra::kable_styling(font_size = 16) |> 
   kableExtra::column_spec(1, bold = TRUE) |> 
   kableExtra::column_spec(2, bold = TRUE, color = "#0072bc")
