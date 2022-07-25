@@ -1,0 +1,9 @@
+﻿Layer,Function,Explanation
+Data,ggplot(data),The raw data that you want to plot.
+Aesthetics,aes(),"Aesthetics mappings of the geometric and statistical objects, such as position, color, size, shape, and transparency."
+Geometries,geom_*(),The geometric shapes that will represent the data.
+Statistical transformations,stat_*(),"Statistical summaries of the data, such as quantiles, fitted curves, and sums."
+Scales,scale_*(),"Maps between the data and the aesthetic dimensions, such as data range to plot width or factor values to colors."
+Coordinate System,coord_*(),The transformation used for mapping data coordinates into the plane of the data rectangle.
+Facets,facet_*(),The arrangement of the data into a grid of plots.
+Visual Themes,theme_*(),"The overall visual defaults of a plot, such as background, grids, axes, default typeface, sizes and colors."
