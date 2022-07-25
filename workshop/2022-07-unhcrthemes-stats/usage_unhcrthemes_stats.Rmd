@@ -939,7 +939,7 @@ ggplot(data = displ,
 
 **Check available colours in the package**
 
-```{r, fig.height=4}
+```{r, fig.height=5}
 display_unhcr_all()
 ```
 
@@ -1078,6 +1078,8 @@ class: inverse, center, middle
 * [hcrdata](https://github.com/UNHCR-WEB/hcrdata/): API to connect to internal data source
 * [HighFrequencyChecks](https://github.com/unhcr/HighFrequencyChecks/): Perform High Frequency Check
 * [koboloadeR](https://github.com/unhcr/koboloadeR/): Process data crunching for survey dataset
+* [popdata](https://gitlab.com/dickoa/popdata): Download data from UNHCR POPDATA
+* [ridl](https://gitlab.com/dickoa/ridl): R client to UNHCR Raw Internal Data Library
 
 
 ---
