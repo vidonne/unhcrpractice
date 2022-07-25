@@ -27,4 +27,4 @@ usage of `Rmarkdown` templates.
 -   **[`unhcrthemes`
     session](https://github.com/vidonne/unhcrpractice/tree/main/workshop/2022-07-unhcrthemes-stats)
     for stats team** - July 2022
-    -   Presentation
+    -   [Presentation](https://vidonne.github.io/unhcrpractice/workshop/2022-07-unhcrthemes-stats/usage_unhcrthemes_stats.html#1)

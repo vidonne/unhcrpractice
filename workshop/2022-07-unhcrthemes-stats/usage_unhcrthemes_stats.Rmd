@@ -1,14 +1,45 @@
 ---
-title: "Data Visualization Session"
+title: "Data Visualization"
 subtitle: "Usage of unhcthemes package"
-author: "Cedric Vidonne"
-institute: "IPDA/GDS"
-date: "`r format(Sys.Date(),  '%d %B %Y')`"
-output: unhcrdown::html_slides
+output: 
+  unhcrdown::html_slides:
+    self_contained: true
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      ratio: "16:9"
 ---
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
+library(ragg)
+knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE,
+  collapse = TRUE,
+  comment = "#",
+  dev = "ragg_png",
+  fig.showtext = TRUE,
+  fig.retina = 2,
+  dpi = 300
+)
+library(tidyverse)
+library(unhcrthemes)
+```
+
+```{css, echo = FALSE}
+.primary {
+  color: var(--unhcr-blue);
+}
+.w-75 {
+  max-width: 75%;
+}
+.w-50 {
+  max-width: 50%;
+}
+.w-25 {
+  max-width: 25%;
+}
 ```
 
 # Objectives
@@ -26,103 +57,558 @@ options(htmltools.dir.version = FALSE)
 - Data manipulation: [`dplyr`](https://dplyr.tidyverse.org/), [`tidyr`](https://tidyr.tidyverse.org/), etc.
 - R programming: [R for Data Science](https://r4ds.had.co.nz/), [Advanced R Programming](https://adv-r.hadley.nz/), etc.
 
---
-
-See the `xaringan::moon_reader()` package documentation<sup>1</sup> and examples<sup>2</sup> for more information regarding usage.
-
-
-.footnote[
-[1] https://github.com/yihui/xaringan
-
-[2] https://slides.yihui.org/xaringan/
-]
-
-
 ---
-class: center, middle
+class: inverse, center, middle
 
-# Section title
+# `ggplot2` and `unhcrthemes`
 
-### An interesting new Section
+### Introduction
 
 ---
 
-# Basic style
-
-The templates comes with predefined styles for inline text, such as *italic*, **bold** or <u>underline text</u>.
-
-It also includes the requires styles for common elements such as:
+# The `ggplot2` package
 
 .pull-left[
-**Headers:**
 
-## Heading 2
+- **`ggplot2`** is an R package for declaratively creating graphics
 
-### Heading 3
+- **`ggplot2`** is an implementation [The Grammar of Graphics](https://link.springer.com/chapter/10.1007/978-3-642-21551-3_13) by Leland Irving
 
-**Lists:**
+- **The idea** don't start with the final form of the graphic (Excel approach) but **decompose the graphic** into its constituents
 
-* item 1
-* item 2
-    1. sub-item 2.1
-    2. sub-item 2.2
 ]
 
 .pull-right[
 
-**Or quotes:**
-
-> It is further proof that refugee movements and the broader issue of migration of populations ... is a global challenge that cannot be confined to a few countries.
->
-> Filippo Grandi
+.center[![ggplot2 HEX](https://raw.githubusercontent.com/tidyverse/ggplot2/main/man/figures/logo.png)]
 
 ]
+
+
+???
+You provide the data, tell ggplot2 how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details.
+What does it take to create a graphic? Data, axis, geometric objects, etc.
+
+---
+
+# Structure of `ggplot2`
+
+How a **`ggplot2`** graph is built on the grammar of graphics elements:
+
+--
+
+1. **Data .primary[`ggplot(data)`]:** The raw data that you want to plot.
+
+--
+
+2. **Aesthetics .primary[`aes()`]:** Aesthetics mappings of the geometric and statistical objects, such as position, color, size, shape, and transparency
+
+--
+
+3. **Geometries .primary[`geom_*()`]:** The geometric shapes that will represent the data.
+
+--
+
+4. **Statistical transformations .primary[`stat_*()`]:** Statistical summaries of the data, such as quantiles, fitted curves, and sums.
+
+--
+
+5. **Scales .primary[`scale_*()`]:** Maps between the data and the aesthetic dimensions, such as data range to plot width or factor values to colors.
+
+--
+
+6. **Coordinate system .primary[`coord_*()`]:** The transformation used for mapping data coordinates into the plane of the data rectangle.
+
+--
+
+7. **Facets .primary[`facet_*()`]:** The arrangement of the data into a grid of plots.
+
+--
+
+8. **Visual themes .primary[`theme_*()`]:** The overall visual defaults of a plot, such as background, grids, axes, default typeface, sizes and colors.
+
+???
+1. Data - without data, you don't have a plot!
+2. Mapping - linking variables to graphical properties.
+3. Geometries - interpret aesthetics as graphical representations.
+4. Statistics - compute/transform numbers for us.
+5. Scales - interpret values in data to graphical properties.
+6. Coordinates - define physical mapping.
+7. Facets - split plot into panels.
+8. Theme - what does your plot look like?
+
+---
+
+# The `unhcrthemes` package
+
+.pull-left[
+
+1. Adjusted `ggplot2` theme
+
+2. A series of color palette for:
+
+    - A **categorical palette** for UNHCR main data visualization colors
+
+    - A **categorical palette** for people of concern to UNHCR categories
+
+    - A **categorical palette** for geographical regional divisions of UNHCR
+
+    - Six **sequential color palettes** for all the main data visualization colors
+
+    - Two recommended **diverging color palette**
+
+]
+
+.pull-right[
+
+.center[<img src="https://raw.githubusercontent.com/vidonne/unhcrthemes/master/man/figures/unhcrthemes_sticker.png" alt="unhcrthemes HEX" style="max-width:60%">]
+
+]
+
+
+???
+You provide the data, tell ggplot2 how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details.
+What does it take to create a graphic? Data, axis, geometric objects, etc.
 
 ---
 class: inverse, center, middle
 
-# Section title - Dark
+# `ggplot2` and `unhcrthemes`
 
-### An interesting new Section
+### In action
+
 
 ---
 
-# Tables
+## Setup
 
-If you want to generate a table, make sure it is in the HTML format (instead of Markdown or other formats), e.g.,
+A step-by-step on how to build a UNHCR branded chart with `ggplot2` and `unhcrthemes` packages, using an example chart from [Global Trends 2021](https://www.unhcr.org/globaltrends.html).
+
+.pull-left[
+
+**Load the required packages and data**
 
 ```{r}
-knitr::kable(head(iris), format = 'html')
+# Load packages
+library(tidyverse)
+library(unhcrthemes)
+
+# Load data
+displ <- read_csv("data/displaced_pop.csv")
 ```
 
+
+```{r, include=FALSE}
+displ <- displ |> 
+  mutate(pop = factor(pop, levels = c("IDPs", "Refugees under UNHCR's mandate", "Refugees under UNRWA’s mandate", "Asylum seekers", "Venezuelans displaced abroad", "Latest available estimates")))
+```
+
+]
+
+.pull-right[
+
+
+```{r, echo=FALSE}
+knitr::kable(head(displ), format = 'html')
+```
+
+]
+
 ---
-background-image: url(`r xaringan:::karl`)
-background-position: 50% 50%
-class: bottom, inverse, hide-logo
 
-### Or a full page picture with no logo
+## Data
+
+.pull-left[
+
+```{r, eval=FALSE}
+ggplot(data = displ) #<<
+```
+
+]
+
+.pull-right[
+
+```{r, echo=FALSE, fig.height=6}
+ggplot(data = displ)
+```
+
+]
+
+???
+1. Data - without data, you don't have a plot!
+But nothing happens here because we haven't mapped the raw data to anything. SO we just get a empty canvas.
 
 ---
 
-# Reveal
+## Aesthetics
 
-Here's a new slide that show piece by piece
+.pull-left[
+
+```{r, eval=FALSE}
+ggplot(data = displ,
+       aes(x = year, y = num))  #<<
+```
+
+]
+
+.pull-right[
+
+```{r, echo=FALSE, fig.height=6}
+ggplot(data = displ,
+       aes(
+         x = year,
+         y = num
+       ))
+```
+
+]
+
+???
+2. Mapping - linking variables to graphical properties.
+We have now mapped the year to the x axis and the number displaced to y but we still don't see anything special except the axis value
+
+---
+
+## Geoms
+
+.pull-left[
+
+```{r, eval=FALSE}
+ggplot(data = displ,
+       aes(x = year, y = num)) +
+  geom_col() #<<
+```
+
+]
+
+.pull-right[
+
+```{r, echo=FALSE, fig.height=6}
+ggplot(data = displ,
+       aes(x = year, y = num)) +
+  geom_col()
+```
+
+]
+
+---
+
+## Scale
+
+.pull-left[
+
+```{r, eval=FALSE}
+ggplot(data = displ,
+       aes(x = year, y = num)) +
+  geom_col() +
+  scale_x_continuous( #<<
+    breaks = scales::pretty_breaks(n = 10)) #<<
+```
+
+]
+
+.pull-right[
+
+```{r, echo=FALSE, fig.height=6}
+ggplot(data = displ,
+       aes(x = year, y = num)) +
+  geom_col() +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10))
+```
+
+]
+
+---
+
+## Scale
+
+.pull-left[
+
+```{r, eval=FALSE}
+ggplot(data = displ,
+       aes(x = year, y = num)) +
+  geom_col() +
+  scale_x_continuous(
+    breaks = scales::pretty_breaks(n = 10)) +
+  scale_y_continuous( #<<
+    labels = scales::label_number_si(), #<<
+    expand = expansion(c(0, 0.1))) #<<
+```
+
+]
+
+.pull-right[
+
+```{r, echo=FALSE, fig.height=6}
+ggplot(data = displ,
+       aes(x = year, y = num)) +
+  geom_col() +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  scale_y_continuous(labels = scales::label_number_si(),
+                     expand = expansion(c(0, 0.1)))
+```
+
+]
+
+---
+
+## Theme
+
+.pull-left[
+
+Before playing with `unhcthemes` let's add some information on the chart.
+
+```{r, eval=FALSE}
+ggplot(data = displ,
+       aes(x = year, y = num)) +
+  geom_col() +
+  scale_x_continuous(
+    breaks = scales::pretty_breaks(n = 10)) +
+  scale_y_continuous(
+    labels = scales::label_number_si(), 
+    expand = expansion(c(0, 0.1))) +
+  labs(title = "People forced to flee worldwide | 2012-2022", #<<
+    caption = "Source: UNHCR Refugee Data Finder") #<<
+```
+
+]
+
+.pull-right[
+
+```{r, echo=FALSE, fig.height=6}
+ggplot(data = displ,
+       aes(x = year, y = num)) +
+  geom_col() +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  scale_y_continuous(labels = scales::label_number_si(),
+                     expand = expansion(c(0, 0.1))) +
+  labs(title = "People forced to flee worldwide | 2012-2022",
+    caption = "Source: UNHCR Refugee Data Finder")
+```
+
+]
+
+---
+
+## Theme
+
+.pull-left[
+
+```{r, eval=FALSE}
+ggplot(data = displ,
+       aes(x = year, y = num)) +
+  geom_col() +
+  scale_x_continuous(
+    breaks = scales::pretty_breaks(n = 10)) +
+  scale_y_continuous(
+    labels = scales::label_number_si(), 
+    expand = expansion(c(0, 0.1))) +
+  labs(title = "People forced to flee worldwide | 2012-2022",
+    caption = "Source: UNHCR Refugee Data Finder") +
+  theme_unhcr() #<<
+```
+
+]
+
+.pull-right[
+
+```{r, echo=FALSE, fig.height=6}
+ggplot(data = displ,
+       aes(x = year, y = num)) +
+  geom_col() +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  scale_y_continuous(labels = scales::label_number_si(),
+                     expand = expansion(c(0, 0.1))) +
+  labs(title = "People forced to flee worldwide | 2012-2022",
+    caption = "Source: UNHCR Refugee Data Finder") +
+  theme_unhcr()
+```
+
+]
+
+---
+
+## Theme
+
+.pull-left[
+
+```{r, eval=FALSE}
+ggplot(data = displ,
+       aes(x = year, y = num)) +
+  geom_col() +
+  scale_x_continuous(
+    breaks = scales::pretty_breaks(n = 10)) +
+  scale_y_continuous(
+    labels = scales::label_number_si(), 
+    expand = expansion(c(0, 0.1))) +
+  labs(title = "People forced to flee worldwide | 2012-2022",
+    caption = "Source: UNHCR Refugee Data Finder") +
+  theme_unhcr(grid = "Y", #<<
+              axis_title = FALSE) #<<
+```
+
+]
+
+.pull-right[
+
+```{r, echo=FALSE, fig.height=6}
+ggplot(data = displ,
+       aes(x = year, y = num)) +
+  geom_col() +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  scale_y_continuous(labels = scales::label_number_si(),
+                     expand = expansion(c(0, 0.1))) +
+  labs(title = "People forced to flee worldwide | 2012-2022",
+    caption = "Source: UNHCR Refugee Data Finder") +
+  theme_unhcr(grid = "Y",
+              axis_title = FALSE)
+```
+
+]
+
+---
+
+## Theme
+
+.pull-left[
+
+```{r, eval=FALSE}
+ggplot(data = displ,
+       aes(x = year, y = num)) +
+  geom_col(
+    color = unhcr_pal(n = 1, name = "pal_blue") #<<
+    ) +
+  scale_x_continuous(
+    breaks = scales::pretty_breaks(n = 10)) +
+  scale_y_continuous(
+    labels = scales::label_number_si(), 
+    expand = expansion(c(0, 0.1))) +
+  labs(title = "People forced to flee worldwide | 2012-2022",
+    caption = "Source: UNHCR Refugee Data Finder") +
+  theme_unhcr(grid = "Y",
+              axis_title = FALSE) 
+```
+
+]
 
 --
 
-* One
+.pull-right[
 
---
+```{r, echo=FALSE, fig.height=6}
+ggplot(data = displ,
+       aes(x = year, y = num)) +
+  geom_col(
+    color = unhcr_pal(n = 1, name = "pal_blue")
+  ) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  scale_y_continuous(labels = scales::label_number_si(),
+                     expand = expansion(c(0, 0.1))) +
+  labs(title = "People forced to flee worldwide | 2012-2022",
+    caption = "Source: UNHCR Refugee Data Finder") +
+  theme_unhcr(grid = "Y",
+              axis_title = FALSE)
+```
 
-* Two
+]
 
---
+???
+Is color the right property?
+Also notice that we haven't mapped the color to anything but we're just setting it.
 
-* Three
+---
+
+## Theme
+
+.pull-left[
+
+```{r, eval=FALSE}
+ggplot(data = displ,
+       aes(x = year, y = num)) +
+  geom_col(
+    fill = unhcr_pal(n = 1, name = "pal_blue") #<<
+    ) +
+  scale_x_continuous(
+    breaks = scales::pretty_breaks(n = 10)) +
+  scale_y_continuous(
+    labels = scales::label_number_si(), 
+    expand = expansion(c(0, 0.1))) +
+  labs(title = "People forced to flee worldwide | 2012-2022",
+    caption = "Source: UNHCR Refugee Data Finder") +
+  theme_unhcr(grid = "Y",
+              axis_title = FALSE) 
+```
+
+]
+
+.pull-right[
+
+```{r, echo=FALSE, fig.height=6}
+ggplot(data = displ,
+       aes(x = year, y = num)) +
+  geom_col(
+    fill = unhcr_pal(n = 1, name = "pal_blue")
+  ) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  scale_y_continuous(labels = scales::label_number_si(),
+                     expand = expansion(c(0, 0.1))) +
+  labs(title = "People forced to flee worldwide | 2012-2022",
+    caption = "Source: UNHCR Refugee Data Finder") +
+  theme_unhcr(grid = "Y",
+              axis_title = FALSE)
+```
+
+]
+
+???
+Is color the right property?
+Also notice that we haven't mapped the color to anything but we're just setting it.
+
+---
+
+## Theme
+
+.pull-left[
+
+```{r, eval=FALSE}
+ggplot(data = displ,
+       aes(x = year, y = num,
+           fill = pop)) + #<<
+  geom_col() +
+  scale_x_continuous(
+    breaks = scales::pretty_breaks(n = 10)) +
+  scale_y_continuous(
+    labels = scales::label_number_si(), 
+    expand = expansion(c(0, 0.1))) +
+  labs(title = "People forced to flee worldwide | 2012-2022",
+    caption = "Source: UNHCR Refugee Data Finder") +
+  theme_unhcr(grid = "Y",
+              axis_title = FALSE) 
+```
+
+]
+
+.pull-right[
+
+```{r, echo=FALSE, fig.height=6}
+ggplot(data = displ,
+       aes(x = year, y = num,
+           fill = pop)) +
+  geom_col() +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  scale_y_continuous(labels = scales::label_number_si(),
+                     expand = expansion(c(0, 0.1))) +
+  labs(title = "People forced to flee worldwide | 2012-2022",
+    caption = "Source: UNHCR Refugee Data Finder") +
+  theme_unhcr(grid = "Y",
+              axis_title = FALSE)
+```
+
+]
 
 ---
 class: inverse, center, middle
 
 # Thank you
 
-### Goodbye slide
+### Questions?
