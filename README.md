@@ -28,3 +28,8 @@ usage of `Rmarkdown` templates.
     session](https://github.com/vidonne/unhcrpractice/tree/main/workshop/2022-07-unhcrthemes-stats)
     for stats team** - July 2022
     -   [Presentation](https://vidonne.github.io/unhcrpractice/workshop/2022-07-unhcrthemes-stats/usage_unhcrthemes_stats.html#1)
+-   **[Data Visualization Training
+    session](https://github.com/vidonne/unhcrpractice/tree/main/workshop/2022-11-dvt-budapest)
+    in Budapest** - November 2022
+    -   [`unhcrthemes`
+        presentation](https://vidonne.github.io/unhcrpractice/workshop/2022-11-dvt-budapest/dataviz_with_r_unhcrthemes.html#1)

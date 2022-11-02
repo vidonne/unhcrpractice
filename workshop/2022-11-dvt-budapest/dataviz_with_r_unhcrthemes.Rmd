@@ -361,8 +361,8 @@ But nothing happens here because we haven't mapped the raw data to anything. SO 
 ```{r, eval=FALSE}
 ggplot(
     data = displ,
-    aes(x = year, y = num)
-) #<<
+    aes(x = year, y = num) #<<
+)
 ```
 
 ]
